@@ -19,10 +19,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
+        working-directory: ./React-app
         run: |
           IMAGE_NAME=anu77422/react-app
           COMMIT_SHA=$(git rev-parse --short HEAD)
-          docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$COMMIT_SHA ./React-app
+          docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$COMMIT_SHA .
 
       - name: Push Docker image
         run: |
