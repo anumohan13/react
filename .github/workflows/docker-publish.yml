@@ -3,12 +3,11 @@ name: Docker Build and Push
 on:
   push:
     branches:
-      - main  # Change if you want a different branch trigger
+      - main
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -21,9 +20,13 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t anu77422/react-app:latest -f ./React-app/Dockerfile ./React-app
+          IMAGE_NAME=anu77422/react-app
+          COMMIT_SHA=$(git rev-parse --short HEAD)
+          docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$COMMIT_SHA ./React-app
 
       - name: Push Docker image
         run: |
-          docker push anu77422/react-app:latest
- 
+          IMAGE_NAME=anu77422/react-app
+          COMMIT_SHA=$(git rev-parse --short HEAD)
+          docker push $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:$COMMIT_SHA
