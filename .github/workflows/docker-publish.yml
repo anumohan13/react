@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t anu77422/react-app:latest ./React-app
+          docker build -t anu77422/react-app:latest -f ./React-app/Dockerfile ./React-app
 
       - name: Push Docker image
         run: |
